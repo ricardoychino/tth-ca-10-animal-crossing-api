@@ -1,6 +1,8 @@
 
 /* Elements */
 const dataCard  = document.getElementById('villager-data')
+const loading   = document.getElementById('loading')
+const content   = document.getElementById('content')
 const photo     = document.querySelector('#villager-data .photo img')
 const nameTag   = document.querySelector('#villager-data .name')
 const quote     = document.querySelector('#villager-data .quote')
@@ -45,6 +47,11 @@ function render(data) {
   infoPersonality.innerHTML = data.personality
   infoHobby.innerHTML = data.nh_details.hobby
   infoBirthday.innerHTML = `${data.birthday_month} ${data.birthday_day}`
+
+  // Hide loading
+  loading.style.display = 'none';
+  // Show content rendered
+  content.style.display = 'block';
 }
 
 // Sample data - from https://api.nookipedia.com/doc (Villagers section)

@@ -8,6 +8,7 @@
   --hobby-background: #9a2617;
   --birthday-background: #829356;
   --default-name-background: #d96809; /* Colorpicked */
+  --tom-nook-color: #945e52; /* Colorpicked */
   /* SVGs */
   --species-svg: url('../img/paw-print.svg');
   --personality-svg: url('../img/personality.svg');
@@ -18,6 +19,15 @@
   --hobby-music-svg: url('../img/Music.svg');
   --hobby-nature-svg: url('../img/Nature.svg');
   --hobby-play-svg: url('../img/Play.svg');
+}
+
+#loading {
+  margin-top: 80px;
+  text-align: center;
+}
+/* Loading SVG properties */
+.spinner_S1WN {
+  fill: var(--tom-nook-color);
 }
 
 * {

@@ -15,46 +15,52 @@
   <body>
     <main>
       <div id="villager-data" data-gender="Male">
-        <div class="profile">
-          <figure class="photo">
-            <img src="https://dodo.ac/np/images/9/94/Ribbot_NH.png" alt="" />
-          </figure>
-          <div class="main">
-            <span class="name">Bud</span>
-            <p class="quote">You're not living unless you're sweating!</p>
-          </div>
+        <div id="loading">
+          <!-- Loading from https://github.com/n3r4zzurr0/svg-spinners/blob/main/svg-css/3-dots-fade.svg?short_path=f66ee04 -->
+          <svg width="80" height="80" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_S1WN{animation:spinner_MGfb .8s linear infinite;animation-delay:-.8s}.spinner_Km9P{animation-delay:-.65s}.spinner_JApP{animation-delay:-.5s}@keyframes spinner_MGfb{93.75%,100%{opacity:.2}}</style><circle class="spinner_S1WN" cx="4" cy="12" r="3"/><circle class="spinner_S1WN spinner_Km9P" cx="12" cy="12" r="3"/><circle class="spinner_S1WN spinner_JApP" cx="20" cy="12" r="3"/></svg>
         </div>
-        <div class="characteristics">
-          <div class="item" data-type="species">
-            <label>Species</label>
-            <div class="response">
-              <!-- <img src="assets/img/paw-print.svg" class="item-icon icon-species" /> -->
-              <i class="icon icon-species"></i>
-              <span>Lion</span>
+        <div id="content" style="display: none;">
+          <div class="profile">
+            <figure class="photo">
+              <img src="https://dodo.ac/np/images/9/94/Ribbot_NH.png" alt="" />
+            </figure>
+            <div class="main">
+              <span class="name">Bud</span>
+              <p class="quote">You're not living unless you're sweating!</p>
             </div>
           </div>
-          <div class="item" data-type="personality">
-            <label>Personality</label>
-            <div class="response">
-              <!-- <img src="assets/img/personality.svg" class="item-icon icon-personality" /> -->
-              <i class="icon icon-personality"></i>
-              <span>Jock</span>
+          <div class="characteristics">
+            <div class="item" data-type="species">
+              <label>Species</label>
+              <div class="response">
+                <!-- <img src="assets/img/paw-print.svg" class="item-icon icon-species" /> -->
+                <i class="icon icon-species"></i>
+                <span>Lion</span>
+              </div>
             </div>
-          </div>
-          <div class="item" data-type="hobby">
-            <label>Hobby</label>
-            <div class="response">
-              <!-- <img src="assets/img/Fitness.svg" class="item-icon" /> -->
-              <i class="icon icon-hobby" data-type="Fitness"></i>
-              <span>Fitness</span>
+            <div class="item" data-type="personality">
+              <label>Personality</label>
+              <div class="response">
+                <!-- <img src="assets/img/personality.svg" class="item-icon icon-personality" /> -->
+                <i class="icon icon-personality"></i>
+                <span>Jock</span>
+              </div>
             </div>
-          </div>
-          <div class="item" data-type="birthday">
-            <label>Birthday</label>
-            <div class="response">
-              <!-- <img src="assets/img/birthday-cake.svg" class="item-icon icon-birthday" /> -->
-              <i class="icon icon-birthday"></i>
-              <span>August 8</span>
+            <div class="item" data-type="hobby">
+              <label>Hobby</label>
+              <div class="response">
+                <!-- <img src="assets/img/Fitness.svg" class="item-icon" /> -->
+                <i class="icon icon-hobby" data-type="Fitness"></i>
+                <span>Fitness</span>
+              </div>
+            </div>
+            <div class="item" data-type="birthday">
+              <label>Birthday</label>
+              <div class="response">
+                <!-- <img src="assets/img/birthday-cake.svg" class="item-icon icon-birthday" /> -->
+                <i class="icon icon-birthday"></i>
+                <span>August 8</span>
+              </div>
             </div>
           </div>
         </div>
