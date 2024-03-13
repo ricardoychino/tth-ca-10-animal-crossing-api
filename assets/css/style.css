@@ -45,7 +45,7 @@ main {
   min-height: 100vh;
   background-image: url('../img/animal-crossing-bg.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: bottom right;
   background-repeat: no-repeat;
 }
 
