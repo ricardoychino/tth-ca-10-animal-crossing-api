@@ -14,15 +14,26 @@ const infoBirthday    = document.querySelector('#villager-data .item[data-type="
 
 const hobbyIcon = document.querySelector('#villager-data .item[data-type="hobby"] .response > i')
 
-/* API URL */
-const url = 'https://api.nookipedia.com/villagers'
+let villagers = []
 
 /* Fetch method */
-async function fetchRandomVillager () {
-  const response = await fetch(url, {})
-  const data = await response.json()
+function fetchAllVillagers () {
 
-  console.log(data)
+  /* API URL */
+  const url = 'https://api.nookipedia.com/villagers'
+  const apiKey = 'ENTER_KEY_HERE'
+  const endpointParams = {
+    nhdetails: true
+  }
+
+  return fetch(`${ url }?${ (new URLSearchParams( endpointParams )).toString() }`, {
+    method: 'GET',
+    headers: {
+      'X-API-KEY': apiKey,
+      'Content-Type': 'application/json',
+      'Accept-Version': '1.0.0'
+    }
+  })
 }
 
 /* Render method */
@@ -32,21 +43,28 @@ function render(data) {
   dataCard.setAttribute('data-gender', data.gender)
 
   // Photo
-  photo.setAttribute('src', data.nh_details.icon_url ?? data.image_url)
   photo.setAttribute('alt', `${data.name}'s photo`)
+  if (data.nh_details) {
+    photo.setAttribute('src', data.nh_details.icon_url)
+    photo.classList.remove('not-nh')
+  } else { // For non-nh villagers
+    photo.setAttribute('src', data.image_url)
+    photo.classList.add('not-nh') /* Vilagers without NH details need some padding in image */
+  }
 
   // Profile
   nameTag.innerHTML = data.name
-  nameTag.style.color = `#${data.text_color}`
-  nameTag.style.backgroundColor = `#${data.title_color}`
-  quote.innerHTML = `${data.quote} <em>"${data.phrase}"</em>`
+  quote.innerHTML = `${data.quote} ${ data.phrase ? `<em>"${data.phrase}"</em>` : ''}`
+
+  nameTag.style.color = data.text_color ? `#${data.text_color}` : 'var(--primary-text)'
+  nameTag.style.backgroundColor = data.title_color ? `#${data.title_color}` : 'var(--primary-background)'
 
   // Characteristics
-  hobbyIcon.setAttribute('data-type', data.nh_details.hobby)
+  hobbyIcon.setAttribute('data-type', (data.nh_details ? data.nh_details.hobby : 'unavailable'))
   infoSpecies.innerHTML = data.species
   infoPersonality.innerHTML = data.personality
-  infoHobby.innerHTML = data.nh_details.hobby
-  infoBirthday.innerHTML = `${data.birthday_month} ${data.birthday_day}`
+  infoHobby.innerHTML = (data.nh_details ? data.nh_details.hobby : '<em class="unavailable">Not specified</em>')
+  infoBirthday.innerHTML = (data.birthday_month && data.birthday_day ? `${data.birthday_month} ${data.birthday_day}` : '<em class="unavailable">Unknown</em>')
 
   // Hide loading
   loading.style.display = 'none';
@@ -54,68 +72,23 @@ function render(data) {
   content.style.display = 'block';
 }
 
-// Sample data - from https://api.nookipedia.com/doc (Villagers section)
-const responseSample = [
-  {
-    "url": "https://nookipedia.com/wiki/Ribbot",
-    "name": "Ribbot",
-    "alt_name": "",
-    "title_color": "bfbfbf",
-    "text_color": "5e5e5e",
-    "id": "flg01",
-    "image_url": "https://dodo.ac/np/images/9/94/Ribbot_NH.png",
-    "species": "Frog",
-    "personality": "Jock",
-    "gender": "Male",
-    "birthday_month": "February",
-    "birthday_day": "13",
-    "sign": "Aquarius",
-    "quote": "Never rest, never rust.",
-    "phrase": "zzrrbbit",
-    "prev_phrases": [
-      "toady"
-    ],
-    "clothing": "Simple Parka",
-    "islander": false,
-    "debut": "DNM",
-    "appearances": [
-      "DNM",
-      "AC",
-      "E_PLUS",
-      "WW",
-      "CF",
-      "NL",
-      "WA",
-      "NH",
-      "HHD",
-      "PC"
-    ],
-    "nh_details": {
-      "image_url": "https://dodo.ac/np/images/9/94/Ribbot_NH.png",
-      "photo_url": "https://dodo.ac/np/images/0/03/RibbotPicACNH.png",
-      "icon_url": "https://dodo.ac/np/images/8/87/Ribbot_NH_Villager_Icon.png",
-      "quote": "Never rest, never rust.",
-      "sub-personality": "B",
-      "catchphrase": "zzrrbbit",
-      "clothing": "Simple Parka",
-      "clothing_variation": "Light Blue",
-      "fav_styles": [
-        "Simple",
-        "Active"
-      ],
-      "fav_colors": [
-        "Blue",
-        "Aqua"
-      ],
-      "hobby": "Fitness",
-      "house_interior_url": "https://dodo.ac/np/images/8/86/House_of_Ribbot_NH.png",
-      "house_exterior_url": "https://dodo.ac/np/images/4/42/House_of_Ribbot_NH_Model.png",
-      "house_wallpaper": "Circuit-Board Wall",
-      "house_flooring": "Future-Tech Flooring",
-      "house_music": "K.K. Technopop",
-      "house_music_note": ""
-      }
-  }
-]
+function renderRandomVillager() {
 
-render(responseSample[0])
+  // Pick one randomly
+  const randomIndex = Math.floor(Math.random() * (villagers.length - 1))
+  const villager = villagers[randomIndex]
+  
+  console.log(villager)
+  render(villager)
+}
+
+
+/* Initialize */
+fetchAllVillagers()
+  .then(resp => resp.json())
+  .then((data) => {
+
+    villagers = data
+
+    renderRandomVillager()
+  })

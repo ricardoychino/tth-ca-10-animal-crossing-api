@@ -7,7 +7,6 @@
   --personality-background: #107896;
   --hobby-background: #9a2617;
   --birthday-background: #829356;
-  --default-name-background: #d96809; /* Colorpicked */
   --tom-nook-color: #945e52; /* Colorpicked */
   /* SVGs */
   --species-svg: url('../img/paw-print.svg');
@@ -91,6 +90,9 @@ main {
 .photo img {
   width: 100%;
 }
+.photo img.not-nh {
+  padding: 15px;
+}
 .main {
   position: relative;
   padding: 30px 40px;
@@ -108,8 +110,9 @@ main {
   padding: 5px 25px;
   border-radius: 50px;
   font-weight: 500;
-  color: #FFFFFF;
-  background-color: var(--default-name-background);
+  color: var(--primary-text);
+  background-color: var(--primary-background);
+  box-shadow: 0 0 15px -5px #00000080;
   transform: rotate(-7.5deg);
 }
 .quote {
@@ -143,6 +146,10 @@ main {
   border-radius: 5px;
   box-shadow: -2.5px 0 15px -2.5px #00000080;
   background-color: var(--primary-background);
+}
+.response .unavailable {
+  font-size: 0.85em;
+  font-weight: 200;
 }
 .response img,
 .response .icon {
