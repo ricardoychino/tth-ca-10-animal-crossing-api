@@ -2,6 +2,7 @@
 /* Elements */
 const dataCard  = document.getElementById('villager-data')
 const loading   = document.getElementById('loading')
+const errorDiv  = document.getElementById('error-panel')
 const content   = document.getElementById('content')
 const photo     = document.querySelector('#villager-data .photo img')
 const nameTag   = document.querySelector('#villager-data .name')
@@ -17,7 +18,7 @@ const hobbyIcon = document.querySelector('#villager-data .item[data-type="hobby"
 let villagers = []
 
 /* Fetch method */
-function fetchAllVillagers () {
+async function fetchAllVillagers () {
 
   /* API URL */
   const url = 'https://api.nookipedia.com/villagers'
@@ -26,14 +27,37 @@ function fetchAllVillagers () {
     nhdetails: true
   }
 
-  return fetch(`${ url }?${ (new URLSearchParams( endpointParams )).toString() }`, {
-    method: 'GET',
-    headers: {
-      'X-API-KEY': apiKey,
-      'Content-Type': 'application/json',
-      'Accept-Version': '1.0.0'
+  try {
+    const response = await fetch(`${ url }?${ (new URLSearchParams( endpointParams )).toString() }`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': apiKey,
+        'Content-Type': 'application/json',
+        'Accept-Version': '1.0.0'
+      }
+    })
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw data
     }
-  })
+
+    return data
+  } catch (e) {
+    throw e
+  }
+}
+
+function renderError (error) {
+  // Update text error
+  if (error instanceof Error) {
+    errorDiv.querySelector(`:scope p`).innerHTML = `<p>${error.message}</p>`
+  } else {
+    errorDiv.querySelector(`:scope p`).innerHTML = `<h3><em>${error.title}</em></h3><p><em>${error.details}</em></p>`
+  }
+  
+  loading.style.display = 'none'
+  errorDiv.style.display = 'block'
 }
 
 /* Render method */
@@ -78,17 +102,19 @@ function renderRandomVillager() {
   const randomIndex = Math.floor(Math.random() * (villagers.length - 1))
   const villager = villagers[randomIndex]
   
-  console.log(villager)
   render(villager)
 }
 
 
-/* Initialize */
-fetchAllVillagers()
-  .then(resp => resp.json())
-  .then((data) => {
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const resp = await fetchAllVillagers()
 
-    villagers = data
+    // Update global list
+    villagers = resp
 
     renderRandomVillager()
-  })
+  } catch (err) {
+    renderError(err)
+  }
+})
